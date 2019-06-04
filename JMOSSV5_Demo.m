@@ -66,7 +66,9 @@ grpDeltaMPB = MODEL.Curves.deltaMPredBand; % Prediction band for deltaM
 %% Plot main results
 % Display additional data from TestPoint 1.
 TP = 1;
-fontSize = 16;
+fontSize = 12;
+windowSize = 600;
+
 WnHat = mean(EKF(TP).bkdPass(:,2)); % North wind [fps]
 WeHat = mean(EKF(TP).bkdPass(:,3)); % East wind [fps]
 WdHat = mean(EKF(TP).bkdPass(:,4)); % Down wind [fps]
@@ -97,7 +99,7 @@ l = legend(h([1 2 3 4]),'Raw EKF Ouput','Excluded Turn Data','GRP','$95$\% Pred.
     'Location','NorthWest');
 set(l,'Interpreter','latex','FontSize',fontSize);
 grid minor;
-set(gcf,'Position',[0 0 1.5*800 800]);
+set(gcf,'Position',[0 0 1.6*windowSize windowSize]);
 title('\textbf{Static Position Error, JMOSS V5 Demo}',...
     'Interpreter','latex','FontSize',fontSize+2)
 
@@ -114,7 +116,7 @@ title('\textbf{Altitude, Airspeed, and Mach Number Corrections, JMOSS V5 Demo}',
     'Interpreter','latex','FontSize',fontSize+2)
 xlabel('Instrument Corrected Mach, $M_{ic}$','Interpreter','latex'...
     ,'FontSize',fontSize);
-ylabel('$\Delta H\ [H_c = H_{ic}+\Delta H]$, ft','FontSize',fontSize);
+ylabel('$\Delta H\ [H_c = H_{ic}+\Delta H]$, ft','FontSize',fontSize,'Interpreter','latex');
 
 subplot(3,1,2);
 plot(grpMach,grpDeltaV,'r-','LineWidth',2); hold on;
@@ -122,7 +124,7 @@ plot(grpMach,grpDeltaVPB,'r:','LineWidth',2);
 grid minor;
 xlabel('Instrument Corrected Mach, $M_{ic}$','Interpreter','latex'...
     ,'FontSize',fontSize);
-ylabel('$\Delta V\ [V_c = V_{ic}+\Delta V]$, kts','FontSize',fontSize);
+ylabel('$\Delta V\ [V_c = V_{ic}+\Delta V]$, kts','FontSize',fontSize,'Interpreter','latex');
 
 subplot(3,1,3);
 plot(grpMach,grpDeltaM,'r-','LineWidth',2); hold on;
@@ -130,8 +132,8 @@ plot(grpMach,grpDeltaMPB,'r:','LineWidth',2);
 grid minor;
 xlabel('Instrument Corrected Mach, $M_{ic}$','Interpreter','latex'...
     ,'FontSize',fontSize);
-ylabel('$\Delta M\ [M_c = M_{ic}+\Delta M]$, M','FontSize',fontSize);
-set(gcf,'Position',[0 0 800 1200])
+ylabel('$\Delta M\ [M_c = M_{ic}+\Delta M]$, M','FontSize',fontSize,'Interpreter','latex');
+set(gcf,'Position',[0 0 windowSize 1.6*windowSize])
 
 %% AoA Effects
 % We can look at each test point individually to see how they might differ
@@ -162,7 +164,7 @@ zlabel('AoA [rad]');
 axis tight;
 legend(h1,names)
 grid minor;
-set(gcf,'Position',[0 0 1.5*800 800]);
+set(gcf,'Position',[0 0 1.6*windowSize windowSize]);
 title('\textbf{Static Position Error: AoA Effects, JMOSS V5 Demo}',...
     'Interpreter','latex','FontSize',fontSize+2)
 view(3);
@@ -188,7 +190,7 @@ for ii = 5:-1:1
 end
 titleStr = sprintf('\\bf{JMOSS EKF: Forward Pass (Test Point %0.0f)}',TP);
 title(titleStr,'Interpreter','latex','FontSize',fontSize+2);
-set(gcf,'Position',[0 0 800 1600]);
+set(gcf,'Position',[0 0 windowSize 1.6*windowSize]);
 
 figure;
 for ii = 5:-1:1
@@ -205,7 +207,7 @@ for ii = 5:-1:1
 end
 titleStr = sprintf('\\bf{JMOSS EKF: Backward Pass (Test Point %0.0f)}',TP);
 title(titleStr,'Interpreter','latex','FontSize',fontSize+2);
-set(gcf,'Position',[0 0 800 1600]);
+set(gcf,'Position',[0 0 windowSize 1.6*windowSize]);
 
 %% Temperature Diagnostics
 % One big factor in obtaining accurate JMOSS results is the accuracy of the
@@ -247,8 +249,8 @@ if isfield(TestPoints(TP),'Tic')
     estimatedOAT2 = Tic./(1+0.2.*Kt.*Mic.^2);
     plot(Mic,estimatedOAT2,'g-','LineWidth',2);
     grid minor;
-    legend('OAT used by JMOSS EKF','OAT derived from $T_{ic}$ and $K_t$','Location','NorthWest');
-    set(gcf,'Position',[0 0 1.5*800 800]);
+    legend('OAT used by JMOSS EKF','OAT derived from $T_{ic}$ and $K_t$','Location','NorthWest','Interpreter','latex');
+    set(gcf,'Position',[0 0 1.6*windowSize windowSize]);
     title('\textbf{Temperature Estimation Performance, JMOSS V5 Demo}',...
     'Interpreter','latex','FontSize',fontSize+2)
     xlabel('Instrument Corrected Mach, $M_{ic}$','Interpreter','latex','FontSize',fontSize); 
@@ -268,7 +270,7 @@ if isfield(TestPoints(TP),'Tic')
     estimatedTotalTemp = estimatedOAT1.*(1 + 0.2*Kt.*Mic.^2);
     plot(Mic,Tic,'b-','LineWidth',2); hold on;
     plot(Mic,estimatedTotalTemp,'r-','LineWidth',2);
-    legend('Actual $T_{ic}$','Estimated $T_{ic}$','Location','NorthWest');
+    legend('Actual $T_{ic}$','Estimated $T_{ic}$','Location','NorthWest','Interpreter','latex');
     grid minor;
     xlabel('Instrument Corrected Mach, $M_{ic}$','Interpreter','latex','FontSize',fontSize); 
     ylabel('Est. Total Temp., $T_{ic}$','Interpreter','latex','FontSize',fontSize);
