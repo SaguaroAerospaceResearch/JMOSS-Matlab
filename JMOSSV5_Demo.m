@@ -67,7 +67,7 @@ grpDeltaMPB = MODEL.Curves.deltaMPredBand; % Prediction band for deltaM
 % Display additional data from TestPoint 1.
 TP = 1;
 fontSize = 12;
-windowSize = 600;
+windowSize = 700;
 
 WnHat = mean(EKF(TP).bkdPass(:,2)); % North wind [fps]
 WeHat = mean(EKF(TP).bkdPass(:,3)); % East wind [fps]
